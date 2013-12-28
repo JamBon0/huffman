@@ -10,7 +10,7 @@ class HuffmanTree {
 
 	function __construct(array $byteArray) {
 		if (count($byteArray) < 2) {
-			throw new Exception('Byte array must have at least two elements');
+			throw new InvalidArgumentException('Byte array must have at least two elements');
 		}
 
 		$this->byteArray = $byteArray;

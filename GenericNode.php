@@ -13,7 +13,7 @@ class GenericNode extends AbstractNode {
 
 	function addSubNode(AbstractNode $node) {
 		if (count($this->subNodes) >= 2) {
-			throw new Exception('Too many sub node');
+			throw new OverflowException('Too many sub node');
 		}
 
 		$this->subNodes[] = $node;

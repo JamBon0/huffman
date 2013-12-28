@@ -1,6 +1,7 @@
 <?php
 
 include_once 'HuffmanTree.php';
+include_once 'IOException.php';
 
 class Compressor {
 
@@ -12,11 +13,11 @@ class Compressor {
 		$fh = fopen($filePath, 'rb');
 
 		if($fh === false){
-			throw new Exception("Can't open file");
+			throw new IOException("Can't open file");
 		}
 
 		if (!flock($fh, LOCK_SH)) {
-			throw new Exception("Can't lock file");
+			throw new IOException("Can't lock file");
 		}
 
 		while (!feof($fh)) {
