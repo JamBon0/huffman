@@ -1,5 +1,7 @@
 <?php
 
+include_once 'AbstractNode.php';
+
 class ByteNode extends AbstractNode {
 
 	private $byte;

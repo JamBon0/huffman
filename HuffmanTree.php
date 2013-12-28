@@ -1,5 +1,8 @@
 <?php
 
+include_once 'GenericNode.php';
+include_once 'ByteNode.php';
+
 class HuffmanTree {
 
 	private $byteArray;
@@ -7,7 +10,7 @@ class HuffmanTree {
 
 	function __construct(array $byteArray) {
 		if (count($byteArray) < 2) {
-			throw new Exception('Byte list must have at least two elements');
+			throw new Exception('Byte array must have at least two elements');
 		}
 
 		$this->byteArray = $byteArray;

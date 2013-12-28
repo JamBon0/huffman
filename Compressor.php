@@ -1,5 +1,7 @@
 <?php
 
+include_once 'HuffmanTree.php';
+
 class Compressor {
 
 	private $byteArray;
@@ -9,7 +11,11 @@ class Compressor {
 		$byteArray = count_chars(''); // Create an empty dictionnary
 		$fh = fopen($filePath, 'rb');
 
-		if (!flock($fh, LOCK_EX)) {
+		if($fh === false){
+			throw new Exception("Can't open file");
+		}
+
+		if (!flock($fh, LOCK_SH)) {
 			throw new Exception("Can't lock file");
 		}
 

@@ -1,5 +1,8 @@
 <?php
 
+include_once 'AbstractNode.php';
+include_once 'ByteNode.php';
+
 class GenericNode extends AbstractNode {
 
 	private $subNodes;
