@@ -3,11 +3,19 @@
 include_once 'GenericNode.php';
 include_once 'ByteNode.php';
 
+/**
+ *
+ */
 class HuffmanTree {
 
 	private $byteArray;
 	private $rootNode;
 
+	/**
+	 *
+	 * @param array $byteArray
+	 * @throws InvalidArgumentException
+	 */
 	public function __construct(array $byteArray) {
 		if (count($byteArray) < 2) {
 			throw new InvalidArgumentException('Byte array must have at least two elements');
@@ -33,6 +41,10 @@ class HuffmanTree {
 		$this->rootNode = $nodeArray[0];
 	}
 
+	/**
+	 *
+	 * @return string
+	 */
 	public function getCodeArray() {
 		$codeArray = array();
 

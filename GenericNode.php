@@ -3,14 +3,25 @@
 include_once 'AbstractNode.php';
 include_once 'ByteNode.php';
 
+/**
+ *
+ */
 class GenericNode extends AbstractNode {
 
 	private $subNodes;
 
+	/**
+	 *
+	 */
 	public function __construct() {
 		$this->subNodes = array();
 	}
 
+	/**
+	 *
+	 * @param AbstractNode $node
+	 * @throws OverflowException
+	 */
 	public function addSubNode(AbstractNode $node) {
 		if (count($this->subNodes) >= 2) {
 			throw new OverflowException('Too many sub node');
@@ -20,6 +31,10 @@ class GenericNode extends AbstractNode {
 		//usort($this->subNodes, array('AbstractNode', 'cmpNode'));
 	}
 
+	/**
+	 *
+	 * @return int
+	 */
 	public function getCount() {
 		$count = 0;
 
@@ -30,6 +45,11 @@ class GenericNode extends AbstractNode {
 		return $count;
 	}
 
+	/**
+	 *
+	 * @param int $byte
+	 * @return int
+	 */
 	public function getCode($byte) {
 		$code = null;
 

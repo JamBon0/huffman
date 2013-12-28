@@ -3,12 +3,20 @@
 include_once 'HuffmanTree.php';
 include_once 'IOException.php';
 
+/**
+ *
+ */
 class Compressor {
 
 	private $byteArray;
 	private $fHandle;
 	private $hTree;
 
+	/**
+	 *
+	 * @param string $filePath
+	 * @throws IOException
+	 */
 	public function __construct($filePath) {
 		$this->byteArray = count_chars(''); // Create an empty dictionnary
 		$this->fHandle = fopen($filePath, 'rb');
@@ -31,11 +39,18 @@ class Compressor {
 		$this->hTree = new HuffmanTree($this->byteArray); // Create the tree
 	}
 
+	/**
+	 *
+	 */
 	public function __destruct() {
 		flock($this->fHandle, LOCK_UN);
 		fclose($this->fHandle);
 	}
 
+	/**
+	 *
+	 * @return string
+	 */
 	public function __toString() {
 		$resString = '';
 		$codeArray = $this->hTree->getCodeArray();
@@ -50,6 +65,10 @@ class Compressor {
 		return $resString;
 	}
 
+	/**
+	 *
+	 * @return int
+	 */
 	public function getCompressedSize() {
 		$binSize = 0;
 		$codeArray = $this->hTree->getCodeArray();
