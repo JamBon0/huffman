@@ -8,7 +8,7 @@ class HuffmanTree {
 	private $byteArray;
 	private $rootNode;
 
-	function __construct(array $byteArray) {
+	public function __construct(array $byteArray) {
 		if (count($byteArray) < 2) {
 			throw new InvalidArgumentException('Byte array must have at least two elements');
 		}
@@ -33,7 +33,7 @@ class HuffmanTree {
 		$this->rootNode = $nodeArray[0];
 	}
 
-	function getCodeArray() {
+	public function getCodeArray() {
 		$codeArray = array();
 
 		foreach ($this->byteArray as $byte => $_) {

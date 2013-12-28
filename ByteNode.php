@@ -11,7 +11,7 @@ class ByteNode extends AbstractNode {
 	private $byte;
 	private $count;
 
-	function __construct($byte, $count) {
+	public function __construct($byte, $count) {
 		if (!in_range($byte, 0, 255)) {
 			throw new RangeException('Invalid byte value');
 		}
@@ -24,11 +24,11 @@ class ByteNode extends AbstractNode {
 		$this->count = $count;
 	}
 
-	function getCount() {
+	public function getCount() {
 		return $this->count;
 	}
 
-	function getByte() {
+	public function getByte() {
 		return $this->byte;
 	}
 

@@ -6,44 +6,37 @@ include_once 'IOException.php';
 class Compressor {
 
 	private $byteArray;
+	private $fHandle;
 	private $hTree;
 
-	function __construct($filePath) {
-		$byteArray = count_chars(''); // Create an empty dictionnary
-		$fh = fopen($filePath, 'rb');
+	public function __construct($filePath) {
+		$this->byteArray = count_chars(''); // Create an empty dictionnary
+		$this->fHandle = fopen($filePath, 'rb');
 
-		if($fh === false){
+		if ($this->fHandle === false) {
 			throw new IOException("Can't open file");
 		}
 
-		if (!flock($fh, LOCK_SH)) {
+		if (!flock($this->fHandle, LOCK_SH)) {
 			throw new IOException("Can't lock file");
 		}
 
-		while (!feof($fh)) {
-			$fileContents = fread($fh, 8192);
+		while (!feof($this->fHandle)) {
+			$fileContents = fread($this->fHandle, 8192);
 			$tmpCharArray = count_chars($fileContents); // Count every byte
-			$byteArray = array_map('array_sum', array_map(null, $byteArray, $tmpCharArray)); // Sum up with total
+			$this->byteArray = array_map('array_sum', array_map(null, $this->byteArray, $tmpCharArray)); // Sum up with total
 		}
 
-		flock($fh, LOCK_UN);
-		fclose($fh);
-		$this->byteArray = array_filter($byteArray); // Remove useless bytes
+		$this->byteArray = array_filter($this->byteArray); // Remove useless bytes
 		$this->hTree = new HuffmanTree($this->byteArray); // Create the tree
 	}
 
-	function getCompressedSize() {
-		$binSize = 0;
-		$codeArray = $this->hTree->getCodeArray();
-
-		foreach ($this->byteArray as $byte => $count) {
-			$binSize += $count * strlen($codeArray[$byte]);
-		}
-
-		return ceil($binSize / 8);
+	public function __destruct() {
+		flock($this->fHandle, LOCK_UN);
+		fclose($this->fHandle);
 	}
 
-	function __toString() {
+	public function __toString() {
 		$resString = '';
 		$codeArray = $this->hTree->getCodeArray();
 
@@ -55,6 +48,17 @@ class Compressor {
 		}
 
 		return $resString;
+	}
+
+	public function getCompressedSize() {
+		$binSize = 0;
+		$codeArray = $this->hTree->getCodeArray();
+
+		foreach ($this->byteArray as $byte => $count) {
+			$binSize += $count * strlen($codeArray[$byte]);
+		}
+
+		return ceil($binSize / 8);
 	}
 
 }

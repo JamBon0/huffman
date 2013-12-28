@@ -7,11 +7,11 @@ class GenericNode extends AbstractNode {
 
 	private $subNodes;
 
-	function __construct() {
+	public function __construct() {
 		$this->subNodes = array();
 	}
 
-	function addSubNode(AbstractNode $node) {
+	public function addSubNode(AbstractNode $node) {
 		if (count($this->subNodes) >= 2) {
 			throw new OverflowException('Too many sub node');
 		}
@@ -20,7 +20,7 @@ class GenericNode extends AbstractNode {
 		//usort($this->subNodes, array('AbstractNode', 'cmpNode'));
 	}
 
-	function getCount() {
+	public function getCount() {
 		$count = 0;
 
 		foreach ($this->subNodes as $node) {
@@ -30,7 +30,7 @@ class GenericNode extends AbstractNode {
 		return $count;
 	}
 
-	function getCode($byte) {
+	public function getCode($byte) {
 		$code = null;
 
 		for ($i = 0; isset($this->subNodes[$i]) && is_null($code); $i++) {
